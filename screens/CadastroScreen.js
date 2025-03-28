@@ -62,6 +62,7 @@ export default function CadastroScreen({ route, navigation }) {
         if(tipoCadastro == 'professor'){
           await crudOperations[tipoCadastro + 'es'].atualizar(itemEdicao.id, formData);
         }else{
+          console.log(formData);
           await crudOperations[tipoCadastro + 's'].atualizar(itemEdicao.id, formData);
         }
         Alert.alert('Sucesso', 'Registro atualizado com sucesso!');
@@ -93,7 +94,6 @@ export default function CadastroScreen({ route, navigation }) {
         value={formData.nome}
         onChangeText={text => setFormData({...formData, nome: text})}
       />
-      {console.log(formData)}
 
       {/* Campos específicos para alunos */}
       {tipoCadastro === 'aluno' && (
@@ -169,7 +169,7 @@ export default function CadastroScreen({ route, navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Duração (em semestres)"
-            value={formData.duracao}
+            value={formData.duracao.toString()}
             onChangeText={text => setFormData({...formData, duracao: text})}
             keyboardType="numeric"
           />
