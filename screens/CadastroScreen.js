@@ -14,12 +14,16 @@ export default function CadastroScreen({ route, navigation }) {
       matricula: '',
       curso_id: '',
       email: '',
-      telefone: ''
+      telefone: '',
+      senha: '', // Campo de senha
+      confirmarSenha: '' // Campo de confirmação de senha
     }),
     ...(tipoCadastro === 'professor' && {
       departamento: '',
       email: '',
-      disciplinas: ''
+      disciplinas: '',
+      senha: '',
+      confirmarSenha: ''
     }),
     ...(tipoCadastro === 'curso' && {
       duracao: '',
@@ -33,6 +37,7 @@ export default function CadastroScreen({ route, navigation }) {
   // Carrega dados auxiliares quando o tipo muda
   useEffect(() => {
     const carregarDadosAuxiliares = async () => {
+
       if (tipoCadastro === 'aluno') {
         const listaCursos = await crudOperations.cursos.buscarTodos();
         setCursos(listaCursos);
@@ -55,6 +60,10 @@ export default function CadastroScreen({ route, navigation }) {
 
       if (tipoCadastro === 'aluno' && !formData.matricula) {
         throw new Error('Matrícula é obrigatória');
+      }
+
+      if ((formData.senha || formData.confirmarSenha) && formData.senha !== formData.confirmarSenha) {
+        throw new Error('As senhas não coincidem');
       }
 
       // Decide se é criação ou atualização
@@ -184,6 +193,27 @@ export default function CadastroScreen({ route, navigation }) {
               <Picker.Item key={prof.id} label={prof.nome} value={prof.id} />
             ))}
           </Picker>
+        </>
+      )}
+
+      {/* Campos para senha */}
+      {(tipoCadastro === 'aluno' || tipoCadastro === 'professor') && (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            value={formData.senha}
+            onChangeText={text => setFormData({...formData, senha: text})}
+            secureTextEntry
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Confirmar Senha"
+            value={formData.confirmarSenha}
+            onChangeText={text => setFormData({...formData, confirmarSenha: text})}
+            secureTextEntry
+          />
         </>
       )}
 
