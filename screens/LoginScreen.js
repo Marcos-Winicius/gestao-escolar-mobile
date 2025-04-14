@@ -11,10 +11,9 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     try {
-      const usuario = await crudOperations.login(email, senha);
+      const usuario = await crudOperations.professores.autenticar(email, senha);
       if (!usuario) throw new Error('Usuário ou senha inválidos');
       login(usuario);
-      navigation.replace('Home');
     } catch (error) {
       Alert.alert('Erro', error.message);
     }

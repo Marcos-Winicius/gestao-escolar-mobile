@@ -28,6 +28,8 @@ export const criarTabelas = async () => {
       senha TEXT NOT NULL,
       disciplinas TEXT
     );
+
+    INSERT INTO professores(id, nome, departamento, email, senha, disciplinas) VALUES(1, "carlos", "TI", "marcoswini@gmail.com", "1234", "matemática");
     
     CREATE TABLE IF NOT EXISTS cursos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
