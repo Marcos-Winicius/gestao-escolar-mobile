@@ -1,5 +1,3 @@
-
-
 import * as SQLite from 'expo-sqlite';
 
 // Conexão com o banco
