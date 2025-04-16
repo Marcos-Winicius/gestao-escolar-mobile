@@ -1,5 +1,3 @@
-
-
 import * as SQLite from 'expo-sqlite';
 
 // Conexão com o banco
@@ -30,11 +28,14 @@ export const criarTabelas = async () => {
       senha TEXT NOT NULL,
       disciplinas TEXT
     );
+
+    INSERT INTO professores(id, nome, departamento, email, senha, disciplinas) VALUES(1, "carlos", "TI", "marcoswini@gmail.com", "1234", "matemática");
     
     CREATE TABLE IF NOT EXISTS cursos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nome TEXT UNIQUE NOT NULL,
       duracao INTEGER,
+      data_inicio TEXT,
       coordenador_id INTEGER,
       FOREIGN KEY(coordenador_id) REFERENCES professores(id)
     );
@@ -59,9 +60,9 @@ export const criarTabelas = async () => {
       criar: async (data) => {
         const db = await conexaoDB;
         return db.runAsync(
-          `INSERT INTO alunos (nome, matricula, curso_id, email, telefone) 
-         VALUES (?, ?, ?, ?, ?)`,
-          [data.nome, data.matricula, data.curso_id, data.email, data.telefone]
+          `INSERT INTO alunos (nome, matricula, curso_id, email, senha, telefone) 
+         VALUES (?, ?, ?, ?, ?, ?)`,
+          [data.nome, data.matricula, data.curso_id, data.email, data.senha, data.telefone]
         );
       },
       buscarTodos: async () => {
@@ -157,9 +158,9 @@ export const criarTabelas = async () => {
       criar: async (data) => {
         const db = await conexaoDB;
         return db.runAsync(
-          `INSERT INTO cursos (nome, duracao, coordenador_id) 
-         VALUES (?, ?, ?)`,
-          [data.nome, data.duracao, data.coordenador_id]
+          `INSERT INTO cursos (nome, duracao, data_inicio, coordenador_id) 
+         VALUES (?, ?, ?, ?)`,
+          [data.nome, data.duracao, data.data_inicio, data.coordenador_id]
         );
       },
       buscarTodos: async()=>{

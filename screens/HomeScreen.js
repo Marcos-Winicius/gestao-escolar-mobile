@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { crudOperations } from '../database/db';
+import { useAuth } from '../context/AuthContext';
 
 export default function HomeScreen({ navigation }) {
+  const { logout } = useAuth();
   const [counts, setCounts] = useState({
     alunos: 0,
     professores: 0,
@@ -107,6 +109,12 @@ export default function HomeScreen({ navigation }) {
         >
           <Ionicons name="book" size={24} color="#e74c3c" />
           <Text style={styles.actionText}>Novo Curso</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.actionButton}
+          onPress={logout}
+        >
+          <Text style={styles.actionText}>Sair</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
